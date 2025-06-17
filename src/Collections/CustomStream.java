@@ -46,15 +46,16 @@ public class CustomStream<E> {
 
     }
 
-    public CustomStream<E> map(Test<E> forEachMethod) {
+    public CustomStream<E> map(Test<E> testFunctionalInterface) {
 
         Collection<E> newCollection = new LinkedList<>();
         for (E listItem : collection){
-            listItem = forEachMethod.testMethod(listItem);
+            listItem = testFunctionalInterface.testMethod(listItem);
             newCollection.add(listItem);
         }
         collection = newCollection;
         return this;
+
     }
 
     public Collection<E> collect() {
