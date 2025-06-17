@@ -3,7 +3,6 @@ package Collections;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.function.Predicate;
 
 public class CustomStream<E> {
 
@@ -13,12 +12,12 @@ public class CustomStream<E> {
         this.collection = collection;
     }
 
-    public CustomStream<E> filter(Predicate<E> filter) {
+    public CustomStream<E> filter(FilterCallback<E> filterCallback) {
 
         Collection<E> newList = new LinkedList<>();
 
         for (E listItem : collection) {
-            if (filter.test(listItem)) {
+            if (filterCallback.performFilter(listItem)) {
                 newList.add(listItem);
             }
         }
@@ -46,11 +45,11 @@ public class CustomStream<E> {
 
     }
 
-    public CustomStream<E> map(Test<E> testFunctionalInterface) {
+    public CustomStream<E> map(MapCallback<E> mapCallback) {
 
         Collection<E> newCollection = new LinkedList<>();
         for (E listItem : collection){
-            listItem = testFunctionalInterface.testMethod(listItem);
+            listItem = mapCallback.performMap(listItem);
             newCollection.add(listItem);
         }
         collection = newCollection;
@@ -58,16 +57,16 @@ public class CustomStream<E> {
 
     }
 
-    public CustomStream<E> forEach(Test<E> testFunctionalInterface){
+    public CustomStream<E> forEach(ForEachCallback<E> forEachCallback) {
 
         for (E listItem : collection) {
-            testFunctionalInterface.testMethod(listItem);
+            forEachCallback.performForEach(listItem);
         }
         return this;
 
     }
 
-    public Collection<E> collect() {
+    public Collection<E> collect() { // Collects as a generic collection - Let users decide what to convert it into
         return collection;
     }
 
