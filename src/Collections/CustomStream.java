@@ -58,6 +58,15 @@ public class CustomStream<E> {
 
     }
 
+    public CustomStream<E> forEach(Test<E> testFunctionalInterface){
+
+        for (E listItem : collection) {
+            testFunctionalInterface.testMethod(listItem);
+        }
+        return this;
+
+    }
+
     public Collection<E> collect() {
         return collection;
     }
